@@ -134,7 +134,7 @@ const projects = [
     id: "SRC_04",
     title: "FinalOSINT",
     sub: "Plataforma de OSINT e Investigação Digital",
-    desc: "Plataforma voltada à pesquisa, organização e análise de informações de fontes abertas, com integração de APIs especializadas em OSINT.",
+    desc: "Plataforma voltada à pesquisa, organização e análise de informações de fontes abertas, com APIs especializadas em OSINT fornecidas por mim para ampliar consultas e processos de investigação digital.",
     tags: ["Python", "OSINT", "APIs", "Automation"],
     href: "https://finalosint.lat/",
     logo: FINALOSINT_LOGO,
@@ -503,7 +503,7 @@ function Projects() {
         <SectionTitle n="03" title="PROJETOS" />
         <div className="space-y-4">
           {projects.map((p) => {
-            const Icon = p.icon;
+            const Icon = p.icon ?? Cpu;
             return (
               <a
                 key={p.id}
