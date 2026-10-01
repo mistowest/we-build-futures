@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import {
   Github,
   Youtube,
+  Instagram,
+  BookOpen,
+  Award,
   MapPin,
   ChevronDown,
   ArrowUpRight,
@@ -11,7 +14,6 @@ import {
   Cpu,
   Globe,
   Server,
-  Eye,
   ShieldCheck,
   FileBadge,
   ExternalLink,
@@ -21,10 +23,14 @@ import {
   X,
   Code2,
   Boxes,
-  Gem,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import wesleyAsset from "@/assets/wesley.png";
+import ceagre2024Asset from "@/assets/ceagre-2024-estacao-ciencias.png";
+import campusParty2025Asset from "@/assets/campus-party-2025.jpeg";
+import integraPalcoAsset from "@/assets/integra-2026-palco.jpeg";
+import integraBannerAsset from "@/assets/integra-2026-banner.jpeg";
+import integraRobotAsset from "@/assets/integra-2026-robot.jpeg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -41,29 +47,55 @@ export const Route = createFileRoute("/")({
 const WHATSAPP_NUMBER = "5564981179276";
 const WHATSAPP_DISPLAY = "+55 64 98117-9276";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+const SOCIALS = {
+  youtube: "https://www.youtube.com/mrwest",
+  x: "https://x.com/mistowest",
+  instagram: "https://www.instagram.com/mistowest",
+  lattes: "http://lattes.cnpq.br/8252876271382452",
+};
 
 const skills = [
-  { name: "Python", desc: "Backend, APIs REST, Automação", tags: ["FastAPI", "Flask", "Pandas"], icon: Code2 },
-  { name: "Golang", desc: "Alto desempenho, Microserviços", tags: ["Gin", "gRPC", "Concorrência"], icon: Boxes },
-  { name: "Lua", desc: "Scripts embarcados, Automação", tags: ["ESP32", "Firmware", "Integração"], icon: Code2 },
-  { name: "Ruby", desc: "Web, Scripts, Automação", tags: ["Rails", "Sinatra", "Gems"], icon: Gem },
-  { name: "IoT / ESP32", desc: "Sensores, Wi-Fi, MQTT, LoRa", tags: ["C++", "Arduino", "DHT22"], icon: Cpu },
-  { name: "WebGIS", desc: "Sistemas geográficos, Mapas", tags: ["Leaflet", "GeoJSON", "PostGIS"], icon: Globe },
-  { name: "Fullstack", desc: "Web, APIs, Databases, DevOps", tags: ["Docker", "PostgreSQL", "Redis"], icon: Server },
+  {
+    name: "Linguagens",
+    desc: "Desenvolvimento e automação",
+    tags: ["Python", "Go", "Lua", "C++"],
+    icon: Code2,
+  },
+  {
+    name: "Backend & APIs",
+    desc: "Serviços, APIs REST e sistemas distribuídos",
+    tags: ["FastAPI", "Flask", "Gin", "gRPC"],
+    icon: Server,
+  },
+  {
+    name: "Web & Frontend",
+    desc: "Interfaces web e aplicações geográficas",
+    tags: ["React", "TypeScript", "Leaflet", "WebGIS"],
+    icon: Globe,
+  },
+  {
+    name: "Dados & Geoprocessamento",
+    desc: "Dados espaciais e bancos de dados",
+    tags: ["PostgreSQL", "PostGIS", "GeoJSON", "Pandas"],
+    icon: Boxes,
+  },
+  {
+    name: "IoT & Embarcados",
+    desc: "Sensoriamento, conectividade e automação",
+    tags: ["ESP32", "MQTT", "LoRa", "Arduino"],
+    icon: Cpu,
+  },
+  {
+    name: "Infraestrutura",
+    desc: "Ambientes, containers e serviços",
+    tags: ["Docker", "Linux", "Redis", "DevOps"],
+    icon: ShieldCheck,
+  },
 ];
 
 const projects = [
   {
     id: "SRC_01",
-    title: "Mapa de Pontos de Coleta",
-    sub: "Projeto Carbono",
-    desc: "Plataforma de mapeamento interativo com visualização georreferenciada de pontos de coleta em diversas regiões do Brasil.",
-    tags: ["Python", "Golang", "WebGIS", "REST API"],
-    href: "https://ceagre-map-hub.lovable.app/",
-    icon: Globe,
-  },
-  {
-    id: "SRC_02",
     title: "Sistema IoT ESP32",
     sub: "Monitoramento Ambiental",
     desc: "Soluções completas de IoT baseadas em ESP32 para monitoramento ambiental em tempo real.",
@@ -72,22 +104,22 @@ const projects = [
     icon: Cpu,
   },
   {
-    id: "SRC_03",
-    title: "EvaOSINT",
-    sub: "Takedown Projects",
-    desc: "Projeto de OSINT e inteligência em mídias sociais, desenvolvido para análise e monitoramento em larga escala.",
-    tags: ["OSINT", "Inteligência", "Social Media"],
-    href: "https://evaosint.lat/",
-    icon: Eye,
+    id: "SRC_02",
+    title: "Robotec — Programação e Robótica",
+    sub: "Coautor",
+    desc: "Participação como coautor no livro Robotec — Programação e Robótica, em publicação vinculada ao CEAGRE.",
+    tags: ["Robótica", "Programação", "CEAGRE"],
+    href: "https://www.ceagre.com.br/PublicationDetail?id=ea1aba00-f15e-48c7-be2a-d6d3a7aada3d",
+    icon: BookOpen,
   },
 ];
 
 const experiences = [
   {
-    role: "Bolsista",
+    role: "Bolsista de Iniciação Científica",
     org: "CEAGRE",
-    orgHref: "https://www.ceagre.com.br/",
-    desc: "Centro de Excelência em Agricultura Exponencial. Participação ativa no Projeto Carbono, desenvolvendo soluções tecnológicas para monitoramento ambiental.",
+    orgHref: "https://www.ceagre.com.br/Services",
+    desc: "Participação ativa na Iniciação Científica, desenvolvendo soluções tecnológicas para monitoramento ambiental.",
   },
   {
     role: "Desenvolvedor",
@@ -105,6 +137,7 @@ function Index() {
       <About />
       <Skills />
       <Projects />
+      <Career />
       <Registry />
       <Contact />
       <Footer />
@@ -129,6 +162,7 @@ function Nav() {
     ["Sobre", "#sobre"],
     ["Habilidades", "#habilidades"],
     ["Projetos", "#projetos"],
+    ["Carreira", "#carreira"],
     ["Registros", "#registros"],
     ["Contato", "#contato"],
   ];
@@ -246,7 +280,7 @@ function Hero() {
             <a href="https://www.ceagre.com.br/" target="_blank" rel="noreferrer" className="hover-underline font-medium text-foreground">
               CEAGRE
             </a>{" "}
-            no Projeto Carbono.
+            em Iniciação Científica.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -271,7 +305,7 @@ function Hero() {
               <ArrowUpRight className="h-4 w-4" />
             </a>
             <a
-              href="https://youtube.com/"
+              href="https://www.youtube.com/mrwest"
               target="_blank"
               rel="noreferrer"
               className="group inline-flex items-center gap-2 rounded-md border border-border bg-card px-5 py-3 font-mono text-xs font-medium uppercase tracking-widest text-foreground transition-colors hover:bg-muted"
@@ -284,7 +318,7 @@ function Hero() {
 
           <div className="mt-10 space-y-1 font-mono text-xs text-muted-foreground">
             <p><span className="text-accent-cyan">{">"}</span> INITIALIZING PORTFOLIO...</p>
-            <p><span className="text-accent-cyan">{">"}</span> STACK: Python, Golang, Ruby, Lua, IoT</p>
+            <p><span className="text-accent-cyan">{">"}</span> STACK: Python, Go, TypeScript, IoT, WebGIS</p>
             <p><span className="text-accent-cyan">{">"}</span> STATUS: <span className="text-accent-cyan">ONLINE</span></p>
           </div>
         </div>
@@ -471,11 +505,131 @@ function Projects() {
   );
 }
 
+function Career() {
+  return (
+    <section id="carreira" className="px-4 py-20 sm:px-6 sm:py-32">
+      <div className="mx-auto max-w-6xl">
+        <SectionTitle n="04" title="CARREIRA" />
+        <div className="relative ml-2 border-l border-border pl-7 sm:ml-6 sm:pl-10">
+          <CareerEntry
+            year="2024"
+            title="Estação Ciências CEAGRE"
+            subtitle="Apresentação de trabalhos"
+            description="Participação na apresentação e divulgação de trabalhos científicos e tecnológicos durante a Estação Ciências do CEAGRE."
+            image={
+              <img
+                src={ceagre2024Asset}
+                alt="Apresentação de trabalhos na Estação Ciências do CEAGRE em 2024"
+                className="h-full w-full object-cover"
+              />
+            }
+          />
+
+          <CareerEntry
+            year="2025"
+            title="Campus Party"
+            subtitle="Automação Geoespacial com n8n"
+            description="Apresentação do projeto Automação Geoespacial com n8n no palco GOV GO, com participação na apresentação dos slides e apoio do Arthur."
+            image={
+              <img
+                src={campusParty2025Asset}
+                alt="Apresentação do projeto Automação Geoespacial com n8n no Campus Party 2025"
+                className="h-full w-full object-cover"
+              />
+            }
+          />
+
+          <CareerEntry
+            year="2026"
+            title="8º Integra — IF Goiano"
+            subtitle="Apresentação de trabalhos e 3º lugar com o cão-robô Unitree Go2"
+            description="Participação no evento Integra, apresentando banners e trabalhos de Iniciação Científica. O projeto Vitrine Tecnológica do Cão Robô Unitree Go2 conquistou o 3º lugar."
+            href="https://eventos.ifgoiano.edu.br/integra2026/"
+            image={
+              <div className="grid h-full grid-cols-2 gap-2 sm:grid-cols-3">
+                <img src={integraPalcoAsset} alt="Participação e premiação no 8º Integra 2026" className="h-48 w-full rounded-md object-cover sm:h-56" />
+                <img src={integraBannerAsset} alt="Banner científico apresentado no 8º Integra 2026" className="h-48 w-full rounded-md object-cover sm:h-56" />
+                <img src={integraRobotAsset} alt="Vitrine tecnológica do cão-robô Unitree Go2" className="col-span-2 h-48 w-full rounded-md object-cover sm:col-span-1 sm:h-56" />
+              </div>
+            }
+          >
+            <div className="mt-5 rounded-md border border-border bg-background/60 p-4">
+              <div className="mb-3 flex items-center gap-2">
+                <Award className="h-4 w-4 text-accent-cyan" />
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-widest text-accent-cyan">Trabalhos apresentados</p>
+              </div>
+              <ul className="space-y-2 text-xs leading-relaxed text-muted-foreground">
+                <li><span className="font-medium text-foreground">GEON8N ALERTAS:</span> automação de avisos agronômicos a partir de índices espectrais Sentinel-2 integrados a fluxos n8n.</li>
+                <li><span className="font-medium text-foreground">A Tabela ao Território:</span> interface web em Leaflet para exploração espaço-temporal de queimadas, desmatamento e erosão em Rio Verde–GO.</li>
+                <li><span className="font-medium text-foreground">Mapeamento de Zonas de Risco de Erosão:</span> análise geoespacial multicritério no estado de Goiás.</li>
+                <li><span className="font-medium text-foreground">Sistema Automatizado para Coleta de Documentos Científicos:</span> web scraping e recuperação aumentada por geração (RAG).</li>
+                <li><span className="font-medium text-foreground">Vitrine Tecnológica do Cão Robô Unitree Go2:</span> recursos de sensoriamento e navegação autônoma aplicados à agricultura de precisão.</li>
+              </ul>
+              <a href="https://eventos.ifgoiano.edu.br/media/arquivos/RELA%C3%87%C3%83O_DE_TRABALHOS_APROVADOS_DO_CAMPUS_RIO_VERDE.pdf" target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest hover-underline">
+                Relação oficial de trabalhos aprovados <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
+          </CareerEntry>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CareerEntry({
+  year,
+  title,
+  subtitle,
+  description,
+  image,
+  href,
+  children,
+}: {
+  year: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  image: React.ReactNode;
+  href?: string;
+  children?: React.ReactNode;
+}) {
+  return (
+    <article className="relative mb-10 last:mb-0">
+      <span className="absolute -left-[2.15rem] top-1.5 h-3 w-3 rounded-full border-2 border-background bg-accent-cyan ring-1 ring-accent-cyan/40 sm:-left-[2.7rem]" />
+      <div className="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="font-mono text-sm font-bold text-accent-cyan">{year}</span>
+        <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">/ carreira</span>
+      </div>
+      <Card className="!p-5 sm:!p-7">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr] lg:items-start">
+          <div>
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h3 className="font-display text-2xl font-bold">{title}</h3>
+                <p className="mt-1 font-mono text-xs text-muted-foreground">{subtitle}</p>
+              </div>
+              {href && <ArrowUpRight className="h-5 w-5 text-muted-foreground" />}
+            </div>
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
+            {children}
+            {href && (
+              <a href={href} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest hover-underline">
+                Ver evento Integra 2026 <ExternalLink className="h-3 w-3" />
+              </a>
+            )}
+          </div>
+          <div className="overflow-hidden rounded-lg border border-border bg-background">{image}</div>
+        </div>
+      </Card>
+    </article>
+  );
+}
+
 function Registry() {
   return (
     <section id="registros" className="px-4 py-20 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-6xl">
-        <SectionTitle n="04" title="REGISTROS DE SOFTWARE" />
+        <SectionTitle n="05" title="REGISTROS DE SOFTWARE" />
         <Card className="!p-8">
           <div className="flex flex-wrap items-start gap-4">
             <IconBox><FileBadge className="h-5 w-5" /></IconBox>
@@ -528,41 +682,101 @@ function Contact() {
   return (
     <section id="contato" className="px-4 py-20 sm:px-6 sm:py-32">
       <div className="mx-auto max-w-3xl">
-        <SectionTitle n="05" title="CONTATO" />
-        <Card className="!p-8 sm:!p-10 text-center">
+        <SectionTitle n="06" title="CONTATO" />
+
+        <Card className="!p-8 text-center sm:!p-10">
           <div className="mx-auto grid h-14 w-14 place-items-center rounded-lg border border-border bg-background font-mono text-sm font-bold">
             WH
           </div>
-          <h3 className="mt-5 font-display text-2xl font-bold">Wesley Henrique</h3>
+
+          <h3 className="mt-5 font-display text-2xl font-bold">
+            Wesley Henrique
+          </h3>
+
           <p className="mt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
             Full Stack · IoT · WebGIS
           </p>
-          <p className="mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="h-4 w-4" /> Rio Verde, GO — Brasil
-          </p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-2 inline-flex items-center gap-2 font-mono text-sm text-foreground hover:text-accent-cyan"
-          >
-            <Phone className="h-4 w-4 text-accent-cyan" /> {WHATSAPP_DISPLAY}
-          </a>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {/* Informações de contato */}
+          <div className="mt-6 flex flex-col items-center gap-3">
+            <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4 shrink-0" />
+              <span>Rio Verde, GO — Brasil</span>
+            </div>
+
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-md border border-accent-cyan/50 bg-accent-cyan-soft px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-accent-cyan transition-colors hover:bg-accent-cyan hover:text-background"
+              className="inline-flex items-center gap-2 font-mono text-sm text-foreground transition-colors hover:text-accent-cyan"
             >
-              <MessageCircle className="h-4 w-4" /> WhatsApp <ArrowUpRight className="h-3.5 w-3.5" />
+              <Phone className="h-4 w-4 shrink-0 text-accent-cyan" />
+              <span>{WHATSAPP_DISPLAY}</span>
             </a>
-            <a href="https://github.com/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-4 py-2.5 font-mono text-xs uppercase tracking-widest hover:bg-muted">
-              <Github className="h-4 w-4" /> GitHub <ArrowUpRight className="h-3.5 w-3.5" />
+          </div>
+
+          {/* Redes e contatos */}
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-accent-cyan/50 bg-accent-cyan-soft px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-accent-cyan transition-colors hover:bg-accent-cyan hover:text-background"
+            >
+              <MessageCircle className="h-4 w-4" />
+              WhatsApp
             </a>
-            <a href="https://youtube.com/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-4 py-2.5 font-mono text-xs uppercase tracking-widest hover:bg-muted">
-              <Youtube className="h-4 w-4" /> YouTube <ArrowUpRight className="h-3.5 w-3.5" />
+
+            <a
+              href={SOCIALS.youtube}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-4 py-2.5 font-mono text-xs uppercase tracking-widest transition-colors hover:bg-muted"
+            >
+              <Youtube className="h-4 w-4" />
+              YouTube
+            </a>
+
+            <a
+              href={SOCIALS.instagram}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-4 py-2.5 font-mono text-xs uppercase tracking-widest transition-colors hover:bg-muted"
+            >
+              <Instagram className="h-4 w-4" />
+              Instagram
+            </a>
+
+            <a
+              href={SOCIALS.x}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-4 py-2.5 font-mono text-xs uppercase tracking-widest transition-colors hover:bg-muted"
+            >
+              <span className="font-semibold">𝕏</span>
+              X
+            </a>
+
+            <a
+              href={SOCIALS.lattes}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-4 py-2.5 font-mono text-xs uppercase tracking-widest transition-colors hover:bg-muted"
+            >
+              <span className="grid h-4 w-4 place-items-center rounded-sm border border-current text-[7px] font-bold">
+                CNPq
+              </span>
+              Lattes
+            </a>
+
+            <a
+              href="https://github.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-background px-4 py-2.5 font-mono text-xs uppercase tracking-widest transition-colors hover:bg-muted"
+            >
+              <Github className="h-4 w-4" />
+              GitHub
             </a>
           </div>
         </Card>
@@ -580,6 +794,7 @@ function Footer() {
           <a href="#sobre" className="hover-underline">Sobre</a>
           <a href="#habilidades" className="hover-underline">Stack</a>
           <a href="#projetos" className="hover-underline">Projetos</a>
+          <a href="#carreira" className="hover-underline">Carreira</a>
           <a href="#registros" className="hover-underline">Registros</a>
           <a href="#contato" className="hover-underline">Contato</a>
         </div>
