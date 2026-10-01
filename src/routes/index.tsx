@@ -471,13 +471,7 @@ function Skills() {
             const Icon = s.icon ?? Cpu;
             return (
               <Card key={s.name}>
-                {p.logo ? (
-                  <span className="inline-grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-md border border-border bg-background">
-                    <img src={p.logo} alt={`${p.title} logo`} className="h-8 w-8 object-contain" />
-                  </span>
-                ) : (
-                  <IconBox><Icon className="h-5 w-5" /></IconBox>
-                )}
+                <IconBox><Icon className="h-5 w-5" /></IconBox>
                 <h3 className="mt-4 font-display text-lg font-semibold">{s.name}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
@@ -513,7 +507,13 @@ function Projects() {
                 className="group flex flex-col gap-5 rounded-lg border border-border bg-card p-6 transition-all hover:-translate-y-0.5 hover:border-foreground sm:flex-row sm:items-start"
               >
                 <span className="font-mono text-xs text-muted-foreground sm:pt-1">{p.id}</span>
-                <IconBox><Icon className="h-5 w-5" /></IconBox>
+                {p.logo ? (
+                  <span className="inline-grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-md border border-border bg-background">
+                    <img src={p.logo} alt={`${p.title} logo`} className="h-8 w-8 object-contain" />
+                  </span>
+                ) : (
+                  <IconBox><Icon className="h-5 w-5" /></IconBox>
+                )}
                 <div className="flex-1">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <h3 className="font-display text-xl font-semibold">{p.title}</h3>
