@@ -550,10 +550,9 @@ function Career() {
             subtitle="Apresentação de trabalhos"
             description="Participação na apresentação e divulgação de trabalhos científicos e tecnológicos durante a Estação Ciências do CEAGRE."
             image={
-              <img
+              <PhotoViewer
                 src={ceagre2024Asset}
                 alt="Apresentação de trabalhos na Estação Ciências do CEAGRE em 2024"
-                className="h-full w-full object-cover"
               />
             }
           />
@@ -564,10 +563,9 @@ function Career() {
             subtitle="Automação Geoespacial com n8n"
             description="Apresentação do projeto Automação Geoespacial com n8n no palco GOV GO, com participação na apresentação dos slides e apoio do Arthur."
             image={
-              <img
+              <PhotoViewer
                 src={campusParty2025Asset}
                 alt="Apresentação do projeto Automação Geoespacial com n8n no Campus Party 2025"
-                className="h-full w-full object-cover"
               />
             }
           />
@@ -580,9 +578,9 @@ function Career() {
             href="https://eventos.ifgoiano.edu.br/integra2026/"
             image={
               <div className="grid h-full grid-cols-2 gap-2 sm:grid-cols-3">
-                <img src={integraPalcoAsset} alt="Participação e premiação no 8º Integra 2026" className="h-48 w-full rounded-md object-cover sm:h-56" />
-                <img src={integraBannerAsset} alt="Banner científico apresentado no 8º Integra 2026" className="h-48 w-full rounded-md object-cover sm:h-56" />
-                <img src={integraRobotAsset} alt="Vitrine tecnológica do cão-robô Unitree Go2" className="col-span-2 h-48 w-full rounded-md object-cover sm:col-span-1 sm:h-56" />
+                <PhotoViewer src={integraPalcoAsset} alt="Participação e premiação no 8º Integra 2026" className="h-48 w-full rounded-md object-cover sm:h-56" />
+                <PhotoViewer src={integraBannerAsset} alt="Banner científico apresentado no 8º Integra 2026" className="h-48 w-full rounded-md object-cover sm:h-56" />
+                <PhotoViewer src={integraRobotAsset} alt="Vitrine tecnológica do cão-robô Unitree Go2" className="col-span-2 h-48 w-full rounded-md object-cover sm:col-span-1 sm:h-56" />
               </div>
             }
           >
@@ -609,6 +607,72 @@ function Career() {
         </div>
       </div>
     </section>
+  );
+}
+
+function PhotoViewer({
+  src,
+  alt,
+  className = "h-full w-full object-cover",
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="group/photo relative block h-full w-full cursor-zoom-in text-left"
+        aria-label={`Ampliar imagem: ${alt}`}
+      >
+        <img src={src} alt={alt} className={className} />
+        <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 pb-3 pt-8 text-xs font-mono text-white opacity-0 transition-opacity group-hover/photo:opacity-100 group-focus-visible/photo:opacity-100">
+          Clique para ampliar
+        </span>
+      </button>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 sm:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Imagem ampliada: ${alt}`}
+          onClick={() => setOpen(false)}
+        >
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            aria-label="Fechar imagem ampliada"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <img
+            src={src}
+            alt={alt}
+            className="max-h-[92vh] max-w-[94vw] rounded-lg object-contain shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      )}
+    </>
   );
 }
 
